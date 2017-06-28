@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.http.response import HttpResponse
 from django.template.loader import get_template
 from django.template import Context                 # store variables before send them to template
+from article.models import Article, Comments
 
 
 # Create your views here.
@@ -21,3 +22,14 @@ def template_two(request):
 def template_three_simple(request):
     view = "template_three"
     return render_to_response('my_view.html', {'name': view})
+
+
+def articles(request):
+    """blog wall with all articles"""
+    return render_to_response('articles.html', {'articles': Article.objects.all()})
+
+
+def article(request, article_id=1):
+    """full content of single article"""
+    return render_to_response('article.html', {'article': Article.objects.get(id=article_id),
+                                               'comments': Comments.objects.filter(comments_article_id=article_id)})
