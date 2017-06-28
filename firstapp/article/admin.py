@@ -16,7 +16,7 @@ class ArticleAdmin(admin.ModelAdmin):
     This is settings for Article
     """
     fields = ['article_title', 'article_text', 'article_date']  # only these fields will be shown in admin page
-    inlines = [ArticleInline]                                   # constrains that shows Articles
+    inlines = [ArticleInline]                                   # add inlines to Article create page, comments here
     list_filter = ['article_date']                              # filter out Articles in Admin page by date
 
 admin.site.register(Article, ArticleAdmin)  # register Article for Admin app
