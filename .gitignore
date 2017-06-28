@@ -7,6 +7,7 @@
 
 *.db
 *.mo
+*.sqlite3
 
 *.pub
 
