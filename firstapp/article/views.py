@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http.response import HttpResponse
 from django.template.loader import get_template
-from django.template import Context                 # store variables before send them to template
+from django.template import Context  # store variables before send them to template
 from article.models import Article, Comments
 
 
@@ -15,7 +15,7 @@ def basic_one(request):
 def template_two(request):
     view = "template_two"
     t = get_template('my_view.html')
-    html = t.render(Context({'name': view}))        # add variable to our template via Context()
+    html = t.render(Context({'name': view}))  # add variable to our template via Context()
     return HttpResponse(html)
 
 
