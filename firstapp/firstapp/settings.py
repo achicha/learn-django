@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 TEMPLATE_DIRS = (
     'templates',
     'article/templates',
+    'loginsys/template',
 )
 
 # Application definition
@@ -41,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'article',
+    'loginsys',
 )
 
 MIDDLEWARE_CLASSES = (

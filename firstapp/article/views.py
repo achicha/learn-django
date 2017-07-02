@@ -7,6 +7,7 @@ from forms import CommentForm
 from models import Article, Comments
 from django.core.exceptions import ObjectDoesNotExist   # if we do not have data in our DB
 from django.core.context_processors import csrf
+from django.contrib import auth
 
 
 # Create your views here.
@@ -30,7 +31,8 @@ def template_three_simple(request):
 
 def articles(request):
     """blog wall with all articles"""
-    return render_to_response('articles.html', {'articles': Article.objects.all()})
+    return render_to_response('articles.html', {'articles': Article.objects.all(),
+                                                'username': auth.get_user(request).username})
 
 
 def article(request, article_id=1):
@@ -41,6 +43,7 @@ def article(request, article_id=1):
     args['article'] = Article.objects.get(id=article_id)                        # get only 1 result
     args['comments'] = Comments.objects.filter(comments_article_id=article_id)  # filter possible many results
     args['form'] = comment_form
+    args['username'] = auth.get_user(request).username
     return render_to_response('article.html', args)
 
 
