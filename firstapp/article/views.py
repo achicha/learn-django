@@ -53,7 +53,7 @@ def addlike(request, article_id):
             article = Article.objects.get(id=article_id)
             article.article_likes += 1
             article.save()
-            response = redirect('/')
+            response = redirect('/')                 # cookies stores in response
             response.set_cookie(article_id, "test")  # save {1:'test'} in our cookie file
             return response
     except ObjectDoesNotExist:
@@ -61,10 +61,12 @@ def addlike(request, article_id):
 
 
 def addcomment(request, article_id):
-    if request.POST:
+    if request.POST and 'pause' not in request.session:
         form = CommentForm(request.POST)        # only post requests possible
         if form.is_valid():                     # form validation
             comment = form.save(commit=False)   # not save comment automatically
             comment.comments_article = Article.objects.get(id=article_id)
             form.save()                         # save in DB
+            request.session.set_expiry(60)      # create session object, which will be expired in 60 second.
+            request.session['pause'] = True     # add {'pause': True} to session
     return article(request, article_id)
