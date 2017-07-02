@@ -1,8 +1,12 @@
-from django.shortcuts import render_to_response
-from django.http.response import HttpResponse
+from django.shortcuts import render_to_response, redirect
+from django.http.response import HttpResponse, Http404
 from django.template.loader import get_template
-from django.template import Context  # store variables before send them to template
-from article.models import Article, Comments
+from django.template import Context                     # store variables before send them to template
+
+from forms import CommentForm
+from models import Article, Comments
+from django.core.exceptions import ObjectDoesNotExist   # if we do not have data in our DB
+from django.core.context_processors import csrf
 
 
 # Create your views here.
@@ -31,5 +35,32 @@ def articles(request):
 
 def article(request, article_id=1):
     """full content of single article"""
-    return render_to_response('article.html', {'article': Article.objects.get(id=article_id),
-                                               'comments': Comments.objects.filter(comments_article_id=article_id)})
+    comment_form = CommentForm
+    args = {}
+    args.update(csrf(request))
+    args['article'] = Article.objects.get(id=article_id)
+    args['comments'] = Comments.objects.filter(comments_article_id=article_id)
+    args['form'] = comment_form
+    return render_to_response('article.html', args)
+
+
+def addlike(request, article_id):
+    """add likes to article"""
+    try:
+        article = Article.objects.get(id=article_id)
+        article.article_likes += 1
+        article.save()
+    except ObjectDoesNotExist:
+        raise Http404
+
+    return redirect('/')
+
+
+def addcomment(request, article_id):
+    if request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.comments_article = Article.objects.get(id=article_id)
+            form.save()
+    return article(request, article_id)
