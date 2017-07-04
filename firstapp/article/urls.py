@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 
     # (?<>) this variable we will use in template
     url(r'^articles/get/(?P<article_id>\d+)/$', 'article.views.article'),
+    url(r'^articles/get/(?P<article_id>\d+)/page/(?P<page_number>\d+)/$', 'article.views.article'),
     url(r'^articles/addlike/(?P<article_id>\d+)/$', 'article.views.addlike'),
     url(r'^articles/addcomment/(?P<article_id>\d+)/$', 'article.views.addcomment'),
     url(r'^page/(\d+)/$', 'article.views.articles'),

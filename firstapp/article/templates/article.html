@@ -15,19 +15,19 @@
             <div class="large-3 large-offset-5 column">
                 <ul class="pagination">
                     {% if comments.has_previous %}
-                        <li class="arrow"><a href="/page/{{ comments.previous_page_number }}/">&laquo;</a> </li>
+                        <li class="arrow"><a href="/articles/get/{{ article.id }}/page/{{ comments.previous_page_number }}/">&laquo;</a> </li>
                     {% else %}
                         <li class="arrow is-hidden"><a href="">&laquo;</a> </li>
                     {% endif %}
                     {% for page in comments.paginator.page_range %}
                         {% if page == comments.number %}
-                            <li class="current"><a href="/page/{{ page }}/">{{ page }}</a></li>
+                            <li class="current"><a href="/articles/get/{{ article.id }}/page/{{ page }}/">{{ page }}</a></li>
                         {% else %}
-                            <li><a href="/page/{{ page }}/">{{ page }}</a></li>
+                            <li><a href="/articles/get/{{ article.id }}/page/{{ page }}/">{{ page }}</a></li>
                         {% endif %}
                     {% endfor %}
                     {% if comments.has_next %}
-                        <li class="arrow"><a href="/page/{{ comments.next_page_number }}/">&raquo;</a></li>
+                        <li class="arrow"><a href="/articles/get/{{ article.id }}/page/{{ comments.next_page_number }}/">&raquo;</a></li>
                     {% else %}
                         <li class="arrow is-hidden"><a href="">&raquo;</a></li>
                     {% endif %}
