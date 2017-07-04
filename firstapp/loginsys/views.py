@@ -1,6 +1,7 @@
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.shortcuts import render, render_to_response, redirect
+from django.contrib.auth.forms import UserCreationForm
 
 
 def login(request):
@@ -11,7 +12,7 @@ def login(request):
         password = request.POST.get('password', '')
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request, user)       # uer auth
+            auth.login(request, user)  # user auth
             return redirect('/')
         else:
             args['login_error'] = 'user not found'
@@ -23,3 +24,22 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+def register(request):
+    args = {}
+    args.update(csrf(request))
+    args['form'] = UserCreationForm()
+    if request.POST:
+        new_user_form = UserCreationForm(request.POST)
+        if new_user_form.is_valid():
+            new_user_form.save()
+            new_user = auth.authenticate(username=new_user_form.cleaned_data['username'],
+                                         password=new_user_form.cleaned_data['password2'])
+            auth.login(request, new_user)
+
+            return redirect('/')
+        else:
+            args['form'] = new_user_form
+
+    return render_to_response('register.html', args)
