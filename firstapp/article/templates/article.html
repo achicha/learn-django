@@ -9,6 +9,8 @@
         <p>Comments:    </p>
         {% for comment in comments %}
             <p>{{ comment.comments_text }}</p>
+            <p>{{ comment.comments_from.username }} {{ comment.comments_date }}</p>
+            <hr>
         {% endfor %}
 
         <div class="row">
