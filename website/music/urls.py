@@ -4,6 +4,7 @@ from . import views                 # string view argument are deprecated
 app_name = 'music'
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),                          # /music/
-    url(r'^(?P<album_id>\d+)/$', views.detail, name='detail'),      # /music/<album_id>/
+    url(r'^$', views.index, name='index'),                                      # /music/
+    url(r'^(?P<album_id>\d+)/$', views.detail, name='detail'),                  # /music/<album_id>/
+    url(r'^(?P<album_id>\d+)/favorite/$', views.favorite, name='favorite'),     # /music/<album_id>/favorite/
 ]
