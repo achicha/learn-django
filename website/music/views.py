@@ -1,16 +1,16 @@
 from django.http import HttpResponse
+from django.template import loader
 from .models import Album
 
 
 def index(request):
     all_albums = Album.objects.all()
-    html = ''
+    template = loader.get_template('index.html')
+    context = {
+        'all_albums': all_albums,
+    }
 
-    for album in all_albums:
-        url = '/music/{}/'.format(str(album.id))
-        html += '<a href="{}">{}</a><br>'.format(url, album.album_title)
-
-    return HttpResponse(html)
+    return HttpResponse(template.render(context, request))
 
 
 def detail(request, album_id):
