@@ -3,5 +3,6 @@ from . import views                 # string view argument are deprecated
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name='index'),                          # /music/
+    url(r'^(?P<album_id>\d+)/$', views.detail, name='detail'),       # /music/<album_id>/
 ]
