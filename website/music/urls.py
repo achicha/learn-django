@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views                 # string view argument are deprecated
 
+app_name = 'music'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),                          # /music/
